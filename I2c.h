@@ -6,4 +6,3 @@ class ParamsI2c {};
 typedef IBus<ParamsI2c>         IBusI2c;
 typedef IBusChannel<ParamsI2c>  IBusChannelI2c;
 typedef BusDevice<ParamsI2c>    BusDeviceI2c;
-

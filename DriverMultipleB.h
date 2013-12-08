@@ -45,6 +45,6 @@ public:
         return iBusDevice;
     }
 private:
-    ParamsI2c      iParams;
-    BusDeviceI2c   iBusDevice;
+    ParamsI2c       iParams;
+    BusDeviceI2c    iBusDevice;
 };
