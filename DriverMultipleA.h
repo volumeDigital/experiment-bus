@@ -2,6 +2,17 @@
 #include "Spi.h"
 #include "I2c.h"
 
+/*  When hardware supports multiple bus types, the driver can present
+    multiple ctors, each of which constructs the driver appropriately.
+
+    This model allows you to have a single class, if that's important
+    to you.
+
+    The IBusDevice* is initialised differently by each ctor. It's a
+    /little/ wasteful to have both Params initialised: We could hide
+    these behind a void* and static cast when creating the BusDevice.
+*/
+
 class DriverMultipleA
 {
 public:
@@ -15,6 +26,10 @@ public:
     , iParamsI2c()
     , iBusDevice(new BusDeviceI2c(aBusChannelI2c, iParamsI2c))
     {}
+    ~DriverMultipleA()
+    {
+        delete iBusDevice;
+    }
 private:
     static const int    kSpiClockMax    = 1000000;
     static const bool   kSpiPhase       = false;
