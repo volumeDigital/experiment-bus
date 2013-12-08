@@ -9,9 +9,8 @@
     are utility classes that aid the driver author.
 */
 
-/*  The Data and Address classes are used instead of TUint32 and Bwx etc to avoid
-    naming parameters in the API: Most API functions operate on /one/ Address, and
-    /one/ Data so the type names are expressive enough without a parameter name
+/*  Data and Address are used in this API so we can avoid naming parameters, while
+    remaining clear.
 */
 
 class Data {};
@@ -24,6 +23,7 @@ class Address {};
 class IBusDevice
 {
 public:
+    virtual ~IBusDevice() {}
     virtual Data Read() = 0;
     virtual void Write(Data) = 0;
 };
@@ -71,6 +71,7 @@ template<typename Params>
 class IBusChannel
 {
 public:
+    virtual ~IBusChannel() {}
     virtual Data Read(const Params&) = 0;
     virtual void Write(const Params&, Data) = 0;
 };
@@ -79,6 +80,7 @@ template<typename Params>
 class IBus
 {
 public:
+    virtual ~IBus() {}
     virtual IBusChannel<Params>* Create(Address) = 0;
 };
 
