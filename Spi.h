@@ -10,13 +10,13 @@ public:
     , iPhase(aPhase)
     , iPolarity(aPolarity)
     {}
-    unsigned int GetClockMaxHz() { return iClockMaxHz; }
-    bool GetPhase() const { return iPhase; }
-    bool GetPolarity() const { return iPolarity; }
+    int GetClockMaxHz() const { return iClockMaxHz; }
+    bool GetPhase()     const { return iPhase; }
+    bool GetPolarity()  const { return iPolarity; }
 private:
-    const unsigned int    iClockMaxHz;
-    const bool            iPhase;
-    const bool            iPolarity;
+    int   iClockMaxHz;
+    bool  iPhase;
+    bool  iPolarity;
 };
 
 typedef IBus<ParamsSpi>         IBusSpi;

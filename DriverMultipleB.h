@@ -25,9 +25,9 @@ public:
         return iBusDeviceSpi;
     }
 private:
-    static const unsigned int   kSpiClockMax    = 1000000;
-    static const bool           kSpiPhase       = false;
-    static const bool           kSpiPolarity    = false;
+    static const int    kSpiClockMax    = 1000000;
+    static const bool   kSpiPhase       = false;
+    static const bool   kSpiPolarity    = false;
 private:
     ParamsSpi       iParamsSpi;
     BusDeviceSpi    iBusDeviceSpi;
