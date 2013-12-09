@@ -1,5 +1,5 @@
 #pragma once
-#include "Spi.h"
+#include "BusSpi.h"
 
 /*  DriverSpi declares its dependency on an IBusChannelSpi&. This
     is used to create an BusDeviceSpi utility class, which is then

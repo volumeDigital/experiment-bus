@@ -1,6 +1,6 @@
 #pragma once
-#include "Spi.h"
-#include "I2c.h"
+#include "BusSpi.h"
+#include "BusI2c.h"
 
 class DriverMultipleB
 {

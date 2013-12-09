@@ -1,6 +1,6 @@
 #pragma once
-#include "Spi.h"
-#include "I2c.h"
+#include "BusSpi.h"
+#include "BusI2c.h"
 
 /*  When hardware supports multiple bus types, the driver can present
     multiple ctors, each of which constructs the driver appropriately.
