@@ -5,46 +5,62 @@
 class DriverMultipleB
 {
 public:
-    DriverMultipleB();
+    DriverMultipleB()
+    {}
     virtual IBusDevice& BusDevice() = 0;
     void DoWork()
     {
-        // access BusDevice();
+        BusDevice().Write(Data());
     }
 };
 
 class DriverMultipleBSpi : public DriverMultipleB
 {
 public:
-    DriverMultipleBSpi(IBusChannelSpi& aBusChannelSpi)
-    : iParamsSpi(kSpiClockMax, kSpiPhase, kSpiPolarity)
-    , iBusDeviceSpi(aBusChannelSpi, iParamsSpi)
+    DriverMultipleBSpi(IBusChannelSpi* aBusChannelSpi)
+    : iBusChannelSpi(aBusChannelSpi)
+    , iParamsSpi(kSpiClockMax, kSpiPhase, kSpiPolarity)
+    , iBusDeviceSpi(new BusDeviceSpi(*iBusChannelSpi, iParamsSpi))
     {}
     virtual IBusDevice& BusDevice()
     {
-        return iBusDeviceSpi;
+        return *iBusDeviceSpi;
+    }
+    ~DriverMultipleBSpi()
+    {
+        delete iBusDeviceSpi;
+        delete iBusChannelSpi;
     }
 private:
     static const int    kSpiClockMax    = 1000000;
     static const bool   kSpiPhase       = false;
     static const bool   kSpiPolarity    = false;
 private:
+    IBusChannelSpi* iBusChannelSpi;
     ParamsSpi       iParamsSpi;
-    BusDeviceSpi    iBusDeviceSpi;
+    BusDeviceSpi*   iBusDeviceSpi;
 };
 
 class DriverMultipleBI2c : public DriverMultipleB
 {
 public:
-    DriverMultipleBI2c(IBusChannelI2c& aBusChannel)
-    : iParams()
-    , iBusDevice(aBusChannel, iParams)
+    DriverMultipleBI2c(IBusChannelI2c* aBusChannel)
+    : iBusChannel(aBusChannel)
+    , iParams()
+    , iBusDevice(new BusDeviceI2c(*iBusChannel, iParams))
     {}
     virtual IBusDevice& BusDevice()
     {
-        return iBusDevice;
+        return *iBusDevice;
+    }
+    ~DriverMultipleBI2c()
+    {
+        delete iBusDevice;
+        delete iBusChannel;
     }
 private:
+    IBusChannelI2c* iBusChannel;
     ParamsI2c       iParams;
-    BusDeviceI2c    iBusDevice;
+    BusDeviceI2c*   iBusDevice;
 };
+
