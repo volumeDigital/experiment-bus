@@ -72,9 +72,9 @@ private:
     downgraded by the controller (because SPI is a synchronous bus).
 
     This seems to resolve the Capabilities() issue, but in a more generic way: It might
-    not be possible for a controller to support arbitrary combinations of bus parameters,
-    so a system where params are validated (rather than individual capabilities) is both
-    safer and more convenient (for now).
+    not be possible for a controller to support arbitrary combinations of bus parameters
+    so a system where /params/ are validated, rather than individual /capabilities/, is both
+    safer and more convenient.
 
     Also note that drivers are not /required/ to use ValidateParams() - if they wish, the
     author can choose for the driver to fail on first bus access rather than the ctor.
