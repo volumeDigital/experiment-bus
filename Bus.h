@@ -55,7 +55,7 @@ private:
 
     The cleanest way to achieve this is for drivers to declare their dependencies
     in the ctor, with the highest degree of abstraction possible: IBusChannel is
-    too abstract, but IBusDeviceSpi is perfect.
+    too abstract, but IBusChannelSpi is perfect.
 
     IBusChannel and IBus are interfaces templated on some Params type. The templates
     provide a consistent, well-defined model for bus relationships that require
