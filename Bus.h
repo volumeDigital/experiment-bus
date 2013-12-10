@@ -102,7 +102,12 @@ public:
 
     The implementation here bundles the channel and params, obviating
     the need to use the IBusChannel and params for every transaction.
+
+    The ctor also validates the params on your behalf, removing more
+    boilerplate from driver ctors.
 */
+
+class ExceptionInvalidParams {};
 
 template<typename Params>
 class BusDevice : public IBusDevice
@@ -111,13 +116,19 @@ public:
     BusDevice(IBusChannel<Params>& aChannel, const Params& aParams)
     : iChannel(aChannel)
     , iParams(aParams)
-    {}
+    {
+        // Automatically validate params on construction
+        if ( ! iChannel.ValidateParams(iParams) )
+            throw new ExceptionInvalidParams();
+    }
     virtual Data Read()
     {
+        // Forward params.
         return iChannel.Read(iParams);
     }
     virtual void Write(Data aData)
     {
+        // Forward params.
         iChannel.Write(iParams, aData);
     }
 private:
