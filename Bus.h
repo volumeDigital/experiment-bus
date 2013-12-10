@@ -65,6 +65,19 @@ private:
     - IBusChannel implementations pass a Params ref as context for each transaction.
 
     Please refer to Spi.h and I2c.h to see how they're used.
+
+    ValidateParams() allows a driver to propose params to the channel and see whether
+    they're supported. The definition of 'supported' should be documented in the params
+    class definition, for example Polarity is non-negotiable, but ClockMaxHz can be silently
+    downgraded by the controller (because SPI is a synchronous bus).
+
+    This seems to resolve the Capabilities() issue, but in a more generic way: It might
+    not be possible for a controller to support arbitrary combinations of bus parameters,
+    so a system where params are validated (rather than individual capabilities) is both
+    safer and more convenient (for now).
+
+    Also note that drivers are not /required/ to use ValidateParams() - if they wish, the
+    author can choose for the driver to fail on first bus access rather than the ctor.
 */
 
 template<typename Params>
@@ -72,6 +85,7 @@ class IBusChannel
 {
 public:
     virtual ~IBusChannel() {}
+    virtual bool ValidateParams(const Params&) = 0;
     virtual Data Read(const Params&) = 0;
     virtual void Write(const Params&, Data) = 0;
 };
