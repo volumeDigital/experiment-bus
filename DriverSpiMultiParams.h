@@ -1,8 +1,6 @@
 #pragma once
 #include "Spi.h"
 
-#define ASSERT(x) (x)
-
 /*  This Driver allows SPI quadread for reading data. The ctor validates its params,
     and records the possibility for quadread in a bool member to be checked at runtime.
 */
