@@ -13,23 +13,24 @@
 class ParamsSpi
 {
 public:
-    ParamsSpi(unsigned int aClockMaxHz, bool aPhase, bool aPolarity, int aWidth = 1)
+    ParamsSpi(unsigned int aClockMaxHz, bool aPhase, bool aPolarity, int aReadWidth = 1)
     : iClockMaxHz(aClockMaxHz)
     , iPhase(aPhase)
     , iPolarity(aPolarity)
-    , iWidth(aWidth)
+    , iReadWidth(aReadWidth)
     {}
-    int  GetClockMaxHz()    const { return iClockMaxHz; }
-    bool GetPhase()         const { return iPhase; }
-    bool GetPolarity()      const { return iPolarity; }
-    int  GetWidth()         const { return iWidth; }
+    int  GetClockMaxHz()    const { return iClockMaxHz; }   // The controller is allowed to downgrade this, all the way to DC
+    bool GetPhase()         const { return iPhase; }        // Controller must respect this.
+    bool GetPolarity()      const { return iPolarity; }     // Controller must respect this.
+    int  GetReadWidth()     const { return iReadWidth; }    // Controller must respect this.
 private:
     int     iClockMaxHz;
     bool    iPhase;
     bool    iPolarity;
-    int     iWidth;
+    int     iReadWidth;
 };
 
 typedef IBus<ParamsSpi>         IBusSpi;
 typedef IBusChannel<ParamsSpi>  IBusChannelSpi;
 typedef BusDevice<ParamsSpi>    BusDeviceSpi;
+

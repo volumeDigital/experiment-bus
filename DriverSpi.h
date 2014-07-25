@@ -10,16 +10,23 @@
 class DriverSpi
 {
 public:
-    DriverSpi(IBusChannelSpi& aBusChannelSpi)
-    : iParamsSpi(kSpiClockMax, kSpiPhase, kSpiPolarity)
-    , iBusDeviceSpi(aBusChannelSpi, iParamsSpi)
+    DriverSpi(IBusChannelSpi* aBusChannelSpi)
+    : iBusChannelSpi(aBusChannelSpi)
+    , iParamsSpi(kSpiClockMax, kSpiPhase, kSpiPolarity)
+    , iBusDeviceSpi(*iBusChannelSpi, iParamsSpi)
     , iBusWriter(iBusDeviceSpi)
     {}
+    void DoWork()
+    {
+        // We avoid the BusWriter here as its interface is empty :)
+        iBusDeviceSpi.Write(Data());
+    }
 private:
     static const int    kSpiClockMax    = 1000000;
     static const bool   kSpiPhase       = false;
     static const bool   kSpiPolarity    = false;
 private:
+    IBusChannelSpi* iBusChannelSpi;
     ParamsSpi       iParamsSpi;
     BusDeviceSpi    iBusDeviceSpi;
     BusWriter       iBusWriter;
