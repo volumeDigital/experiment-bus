@@ -1,5 +1,5 @@
 #pragma once
-#include "Spi.h"
+#include "BusSpi.h"
 
 /*  This Driver allows SPI quadread for reading data. The ctor validates its params,
     and records the possibility for quadread in a bool member to be checked at runtime.
